@@ -21,7 +21,7 @@ jobs:
           activate-environment: rift-eeg
           environment-file: environment.yml
           auto-activate-base: false
-          miniforge-variant: Mambaforge   # faster solves with mamba
+          miniforge-variant: Mambaforge3   # faster solves with mamba
 
       - name: Verify key imports
         shell: bash -el {0}
@@ -44,7 +44,7 @@ jobs:
           activate-environment: rift-eeg
           environment-file: environment.yml
           auto-activate-base: false
-          miniforge-variant: Mambaforge
+          miniforge-variant: Mambaforge3
 
       - name: Lint .py files
         shell: bash -el {0}
@@ -70,7 +70,7 @@ jobs:
           activate-environment: rift-eeg
           environment-file: environment.yml
           auto-activate-base: false
-          miniforge-variant: Mambaforge
+          miniforge-variant: Mambaforge3
 
       - name: Run notebooks with nbmake
         shell: bash -el {0}
