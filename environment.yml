@@ -1,0 +1,43 @@
+name: rift-eeg
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # --- Python ---
+  - python=3.11
+
+  # --- Core scientific stack ---
+  - numpy=1.26.*
+  - scipy=1.13.*
+  - pandas=2.2.*
+  - matplotlib=3.8.*
+
+  # --- EEG / MNE ---
+  - mne=1.7.*              # core MNE
+  - mne-connectivity        # connectivity & coherence (used for RIFT)
+  - pyedflib                # reading .bdf files from Biosemi
+
+  # --- Jupyter ---
+  - jupyterlab=4.*
+  - notebook
+  - ipykernel
+  - ipywidgets
+
+  # --- Plotting extras ---
+  - seaborn
+  - plotly
+
+  # --- Stats ---
+  - statsmodels
+  - pingouin                # circular stats, ANOVAs — useful for orientation data
+
+  # --- Dev / CI ---
+  - ruff
+  - pip
+
+  - pip:
+    - nbmake                # executes notebooks as tests in CI
+    - nbqa                  # runs ruff inside notebook cells
+    - nbstripout            # strips output before committing (keep repo clean)
