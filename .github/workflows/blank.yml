@@ -22,6 +22,7 @@ jobs:
           environment-file: environment.yml
           auto-activate-base: false
           miniforge-variant: Mambaforge3   # faster solves with mamba
+          miniforge-version: "latest"
 
       - name: Verify key imports
         shell: bash -el {0}
@@ -45,6 +46,7 @@ jobs:
           environment-file: environment.yml
           auto-activate-base: false
           miniforge-variant: Mambaforge3
+          miniforge-version: "latest"
 
       - name: Lint .py files
         shell: bash -el {0}
@@ -71,6 +73,7 @@ jobs:
           environment-file: environment.yml
           auto-activate-base: false
           miniforge-variant: Mambaforge3
+          miniforge-version: "latest"
 
       - name: Run notebooks with nbmake
         shell: bash -el {0}
