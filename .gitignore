@@ -1,0 +1,96 @@
+# ============================================================
+# RIFT-EEG Analysis — .gitignore
+# ============================================================
+# Author: Christos Dalamarinis
+
+# ── EEG Data files ──────────────────────────────────────────
+# Raw data — never commit large binary data files
+*.bdf
+*.edf
+*.fif
+*.set
+*.eeg
+*.vhdr
+*.vmrk
+*.cnt
+
+# EyeLink data
+*.edf
+*.asc
+
+# MATLAB outputs
+*.mat
+*.fig
+
+# Processed / intermediate data (adjust folder names to match yours)
+data/
+raw/
+processed/
+derivatives/
+
+
+# ── Jupyter Notebooks ────────────────────────────────────────
+# Strip outputs before committing (use nbstripout for this)
+# but keep the .ipynb files themselves
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# nbmake / pytest cache
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+
+# ── Python ───────────────────────────────────────────────────
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.pyo
+*.pyd
+.Python
+
+
+# ── Conda / virtual environments ─────────────────────────────
+# Don't commit the environment itself, only environment.yml
+envs/
+.conda/
+*.conda
+
+
+# ── VS Code ──────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+
+
+# ── Windows ──────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+
+# ── macOS (if collaborators use Mac) ─────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# ── Output files ─────────────────────────────────────────────
+# Figures and reports are reproducible — optionally gitignore them
+# Comment these out if you DO want to track figures in the repo
+figures/
+reports/
+*.png
+*.pdf
+*.svg
+*.eps
+
+
+# ── Logs and temp files ──────────────────────────────────────
+*.log
+*.tmp
+*.temp
+logs/
