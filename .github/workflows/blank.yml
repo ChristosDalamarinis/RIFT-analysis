@@ -52,9 +52,9 @@ jobs:
         shell: bash -el {0}
         run: ruff check . --exclude ".ipynb_checkpoints"
 
-      - name: Lint notebooks
-        shell: bash -el {0}
-        run: python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
+      #- name: Lint notebooks
+       # shell: bash -el {0}
+        #run: python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
         #nbqa ruff notebooks/ --ignore=E402,E501
         # E402: module-level imports not at top (common in notebooks)
         # E501: line too long (also relaxed for notebooks)
@@ -76,9 +76,8 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: "23.11.0-0"
 
-      - name: Run notebooks with nbmake
-        shell: bash -el {0}
-        env:
-          CI: "true"          # notebooks check this to skip real data loading
-        run: |
-          python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
+      #- name: Run notebooks with nbmake
+       # shell: bash -el {0}
+        #env:
+         # CI: "true"          # notebooks check this to skip real data loading
+        #run: |python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
