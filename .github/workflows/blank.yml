@@ -54,7 +54,7 @@ jobs:
 
       - name: Lint notebooks
         shell: bash -el {0}
-        #run: python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
+        run: python -m pytest --nbmake notebooks/ -v --nbmake-timeout=300
         #nbqa ruff notebooks/ --ignore=E402,E501
         # E402: module-level imports not at top (common in notebooks)
         # E501: line too long (also relaxed for notebooks)
