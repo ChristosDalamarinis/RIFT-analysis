@@ -35,6 +35,9 @@ derivatives/
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
 
+# One specific notebook to ignore (if you have a "scratch" notebook)
+notebook_01_data_import.ipynb
+
 # nbmake / pytest cache
 .pytest_cache/
 __pycache__/
