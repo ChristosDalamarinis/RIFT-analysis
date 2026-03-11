@@ -2,6 +2,7 @@
 # RIFT-EEG Analysis — .gitignore
 # ============================================================
 # Author: Christos Dalamarinis
+# Darte: March 2026
 
 # ── EEG Data files ──────────────────────────────────────────
 # Raw data — never commit large binary data files
