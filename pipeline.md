@@ -41,7 +41,6 @@ EEG data comes in many vendor-specific formats, however here we focus on **.bdf*
 
 ```python
 import mne
-
 raw = mne.io.read_raw_bdf("sub-01.bdf", preload=True)
 ```
 
@@ -53,9 +52,9 @@ Before touching the data, verify that the recording metadata is correct.
 
 **Check the following:**
 
-1) **Sampling rate (`raw.info['sfreq']`):** Confirm it matches what you expect from the recording system (e.g., 500 Hz, 1000 Hz).
+1) **Sampling rate (`raw.info['sfreq']`):** Confirm it matches what you expect from the recording system (e.g., 512 Hz, 1024 Hz).
 2) **Channel count and names (`raw.info['ch_names']`, `raw.info['nchan']`):** Ensure the number of channels is correct and channel labels look right (no duplicates, no unnamed channels).
-3) **Channel types:** Verify that channels are labeled correctly as EEG, EOG, EMG, ECG, STIM, or miscellaneous. Mislabeled channels will be processed incorrectly downstream.
+3) **Channel types:** Verify that channels are labeled correctly as *EEG*, *EOG*, *EMG*, *ECG*, *STIM*, or *miscellaneous*. Mislabeled channels will be processed incorrectly downstream.
 4) **Recording duration (`raw.times[-1]`):** Sanity-check the total recording length against your protocol. Check for total amount of trials and blocks.
 5) **Events/annotations (`raw.annotations`):** Confirm that event markers (triggers) are present and match your experimental design.
 
@@ -74,7 +73,7 @@ Most formats do not embed channel type information reliably. Manually set the ty
 ```python
 MASTOID_CHANNELS = ['EXG5', 'EXG6']
 EOG_CHANNELS     = ['EXG1', 'EXG2', 'EXG3', 'EXG4']
-UNUSED_CHANNELS     = ['EXG7', 'EXG8']
+UNUSED_CHANNELS  = ['EXG7', 'EXG8']
 ```
 
 Then attach a standard electrode montage so that MNE knows the 3D positions of each electrode. This is required for topographic plotting, interpolation, re-referencing to average, and source localization.
@@ -104,7 +103,7 @@ raw.plot(duration=20, n_channels=30, scalings="auto")
 6) **Electrical line noise:** A clear 50 Hz or 60 Hz oscillation (depending on country) visible as a sustained hum.
 7) **Event markers:** Verify that triggers appear at the expected times and in the expected pattern.
 
-### 1.5 Check Power Spectral Density (PSD)
+### 1.5 Check Power Spectral Density (PSD) 
 
 Plot the PSD of the raw data to identify frequency-domain problems before preprocessing.
 
@@ -114,7 +113,7 @@ raw.compute_psd(fmax=100).plot()
 
 **What to look for:**
 1) A clear 60Hz peak (your RIFT signal from the screen flicker) and possibly harmonics at 120Hz and 180Hz.
-2) Whether the 60Hz response is consistent across channels (weak/absent channels might indicate data quality issues).
+2) Whether the 60Hz response is consistent across channels in V1 (weak/absent channels might indicate data quality issues).
 3) Any excessive 50Hz line noise that might interfere with analysis.
 4) Whether the overall spectral shape looks reasonable (typical alpha bump around 8-13 Hz) aside from the 60Hz peak. (Logic = "Is the rest of my EEG data okay?")
 5) Whether individual channels have widely different spectra (indicating a bad channel).
