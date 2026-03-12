@@ -23,6 +23,9 @@
 *.mat
 *.fig
 
+# Behavioral data (if large and not essential for code testing)
+*.csv
+
 # Processed / intermediate data (adjust folder names to match yours)
 data/
 raw/
