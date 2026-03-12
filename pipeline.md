@@ -118,7 +118,7 @@ raw.compute_psd(fmax=100).plot()
 4) Whether the overall spectral shape looks reasonable (typical alpha bump around 8-13 Hz) aside from the 60Hz peak. (Logic = "Is the rest of my EEG data okay?")
 5) Whether individual channels have widely different spectra (indicating a bad channel).
 
-**Note:** Analyze this during periods when the RIFT flicker is ON to ensure you capture the 60Hz SSVEP response.
+**Note:** Analyze this during periods when the RIFT flicker is ON to ensure you capture the 60Hz SSVEP response. **IMPORTANT**
 
 ---
 
