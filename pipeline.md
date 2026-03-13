@@ -122,6 +122,32 @@ This is a **general data quality check** — the goal here is to assess the over
 
 **Note:** You may or may not see a small peak at 60 Hz here — if it is visible, that is a good sign, but its absence does not indicate a problem. Raw PSD computed over the entire recording is a blunt tool: it averages over RIFT-on and RIFT-off periods alike, discards phase information entirely, and has no noise reduction applied. Detecting the RIFT response properly requires restricting the analysis to **RIFT-on time windows**, cleaning the data, and using **phase-sensitive measures such as coherence** — all of which are handled in Phase 4.
 
+### 1.6 Exploratory PSD on RIFT-On Epochs (Raw, Unpreprocessed)
+
+An optional sanity check — epoch the raw data around RIFT-on triggers (trigger code **40**) and compute the PSD only over those windows, to see if restricting to flicker-active periods makes a 60 Hz elevation more visible compared to 1.5.
+
+**Important caveats:**
+- The data is still raw and unpreprocessed — artifacts, noise, and drifts are all still present
+- This epoching is **temporary and exploratory only** — it operates on a copy of `raw` and does not alter it in any way
+- Not seeing a 60 Hz peak here is still perfectly normal for the same reasons discussed in 1.5
+- This is **not** the RIFT analysis — that happens in Phase 4 after preprocessing, using coherence
+
+**Epoch window:** `tmin=-0.2` (200 ms before flicker onset) and `tmax=2.5` (full 2000 ms RIFT window + 500 ms after it ends).
+
+```python
+raw_copy       = raw.copy()
+rift_on_events = events[events[:, 2] == 40]
+
+epochs_explore = mne.Epochs(
+    raw_copy, rift_on_events, event_id={'rift_on': 40},
+    tmin=-0.2, tmax=2.5, baseline=None, picks='eeg', preload=True,
+)
+
+epochs_explore.compute_psd(fmin=40, fmax=80).plot(average=True)
+
+del raw_copy, epochs_explore   # discard — raw is unchanged
+```
+
 ---
 
 ## Phase 2 — Preprocessing
@@ -149,21 +175,17 @@ raw.info["bads"] = nd.get_bads()
 
 ### 2.2 Filtering
 
-Filtering removes frequency content outside the band of interest. The order and parameters matter — and for RIFT-EEG, the filter settings are **critically different** from a standard ERP pipeline.
+Filtering removes frequency content outside the band of interest. The order and parameters matter — and for RIFT-EEG, the filter settings are **critically different** from a standard (e.g ERP) pipeline.
 
 > **⚠️ CRITICAL FOR RIFT:** Your frequency of interest is 60 Hz. A standard low-pass filter at 40 Hz (common in ERP work) would **completely destroy your RIFT signal**. The low-pass must be set well above 60 Hz, or omitted entirely.
 
-**High-pass filter (removing slow drifts):**
-
-A high-pass filter at **0.1 Hz** is appropriate. For improved ICA quality, consider filtering a copy at 1 Hz for the ICA fit (see 2.5).
+**High-pass filter (removing slow drifts):** A high-pass filter at **0.1 Hz** is appropriate. For improved ICA quality, consider filtering a copy at 1 Hz for the ICA fit (see 2.5).
 
 ```python
 raw.filter(l_freq=0.1, h_freq=None, fir_design="firwin")
 ```
 
-**Low-pass filter — RIFT-adjusted:**
-
-Set the low-pass to **100 Hz or higher** to comfortably preserve the 60 Hz tagging frequency plus some headroom for spectral estimation. If your sampling rate is high enough (≥ 500 Hz), 100 Hz is a good choice. If you also care about the second harmonic (120 Hz), set it to 150 Hz or skip the low-pass entirely.
+**Low-pass filter — RIFT-adjusted:** Set the low-pass to **100 Hz or higher** to comfortably preserve the **60 Hz tagging frequency** plus some headroom for spectral estimation. If your sampling rate is high enough (≥ 500 Hz), 100 Hz is a good choice. If you also care about the second harmonic (120 Hz), set it to 150 Hz or skip the low-pass entirely.
 
 ```python
 # RIFT-appropriate low-pass: preserve 60 Hz (and optionally 120 Hz harmonic)
@@ -176,9 +198,7 @@ Or combined:
 raw.filter(l_freq=0.1, h_freq=100.0, fir_design="firwin")
 ```
 
-**Notch filter (removing 50 Hz line noise):**
-
-In the Netherlands, line noise is at **50 Hz**. This is close to but distinct from your 60 Hz tagging frequency. Apply a notch filter at 50 Hz (and its harmonics) to clean up line noise **without** touching 60 Hz. Be cautious with the notch bandwidth — MNE's default is usually fine, but verify that the notch does not extend into the 55–65 Hz range.
+**Notch filter (removing 50 Hz line noise):** In the Netherlands, line noise is at **50 Hz**. This is close to but distinct from your **60 Hz tagging frequency**. Apply a notch filter at 50 Hz (and its harmonics) to clean up line noise **without** touching 60 Hz. Be cautious with the notch bandwidth — MNE's default is usually fine, but verify that the notch does not extend into the 55–65 Hz range.
 
 ```python
 # Remove 50 Hz line noise and harmonics (NL mains frequency)
