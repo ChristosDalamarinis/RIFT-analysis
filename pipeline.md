@@ -242,15 +242,17 @@ EEG is a relative measure — you always need a reference. The choice of referen
 - **Cz or other single electrode:** Sometimes used, but introduces a spatial bias.
 - **REST (Reference Electrode Standardization Technique):** An infinity reference approximation; available in MNE.
 
+**IMPORTANT** -> IN THE CURRENT STUDY WE RE-REFERENCE TO THE TWO MASTOIDS "EXG5" AND "EXG6".
+
 ```python
 # Average reference (most common for high-density EEG)
 raw.set_eeg_reference("average", projection=True)
 
 # Linked mastoids
-raw.set_eeg_reference(["TP9", "TP10"])   # EXG5 and EXG6 in my case
+raw.set_eeg_reference(["EXG5", "EXG6"])   # EXG5 and EXG6 in my case
 ```
 
-If you chose average reference, MNE adds it as a projection. Apply it:
+If you chose average reference, MNE adds it as a projection. Apply it:    
 
 ```python
 raw.apply_proj()
