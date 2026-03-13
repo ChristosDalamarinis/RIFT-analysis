@@ -111,14 +111,16 @@ Plot the PSD of the raw data to identify frequency-domain problems before prepro
 raw.compute_psd(fmax=100).plot()
 ```
 
-**What to look for:**
-1) A clear 60Hz peak (your RIFT signal from the screen flicker) and possibly harmonics at 120Hz and 180Hz.
-2) Whether the 60Hz response is consistent across channels in V1 (weak/absent channels might indicate data quality issues).
-3) Any excessive 50Hz line noise that might interfere with analysis.
-4) Whether the overall spectral shape looks reasonable (typical alpha bump around 8-13 Hz) aside from the 60Hz peak. (Logic = "Is the rest of my EEG data okay?")
-5) Whether individual channels have widely different spectra (indicating a bad channel).
+This is a **general data quality check** — the goal here is to assess the overall health of the recording, not to detect the RIFT signal. At this stage the data is raw and unpreprocessed, so do not be alarmed if you cannot see a clear 60 Hz peak. That is expected and normal.
 
-**Note:** Analyze this during periods when the RIFT flicker is ON to ensure you capture the 60Hz SSVEP response. **IMPORTANT**
+**What to look for:**
+1) **Overall spectral shape** — the spectrum should follow a smooth 1/f curve (power decreasing with frequency), with a visible alpha bump around 8–13 Hz. This is your basic sanity check: *does this look like EEG?*
+2) **50 Hz line noise** — a sharp spike at 50 Hz (Netherlands mains frequency) indicates electrical interference that will need to be removed in Phase 2 with a notch filter.
+3) **Excessive high-frequency power** — a broad elevation above ~40 Hz across many channels usually indicates muscle artifacts.
+4) **Outlier channels** — channels with a clearly different spectral profile from their neighbours (much higher or lower power across the board) are likely bad channels.
+5) **Low-frequency drift** — disproportionately high power at very low frequencies (< 1 Hz) suggests slow drifts from movement or poor electrode contact.
+
+**Note:** You may or may not see a small peak at 60 Hz here — if it is visible, that is a good sign, but its absence does not indicate a problem. Raw PSD computed over the entire recording is a blunt tool: it averages over RIFT-on and RIFT-off periods alike, discards phase information entirely, and has no noise reduction applied. Detecting the RIFT response properly requires restricting the analysis to **RIFT-on time windows**, cleaning the data, and using **phase-sensitive measures such as coherence** — all of which are handled in Phase 4.
 
 ---
 
@@ -225,7 +227,7 @@ EEG is a relative measure — you always need a reference. The choice of referen
 raw.set_eeg_reference("average", projection=True)
 
 # Linked mastoids
-raw.set_eeg_reference(["TP9", "TP10"])
+raw.set_eeg_reference(["TP9", "TP10"])   # EXG5 and EXG6 in my case
 ```
 
 If you chose average reference, MNE adds it as a projection. Apply it:
