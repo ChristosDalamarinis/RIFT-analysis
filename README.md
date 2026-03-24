@@ -46,4 +46,18 @@ data/
 ```
 
 ### Key Dependencies
-`mne`, `mne-icalabel`, `mne-connectivity`, `numpy`, `scipy`, `pandas`, `matplotlib`, `autoreject`
+`mne` 
+
+`mne-icalabel` 
+
+`mne-connectivity`
+
+`numpy`
+ 
+`scipy`
+  
+`pandas` 
+
+`matplotlib`
+
+`autoreject`
