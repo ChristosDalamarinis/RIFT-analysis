@@ -22,14 +22,14 @@ Detects and quantifies EEG phase-locking to a 60 Hz visual flicker stimulus (Rap
 
 ### Pipeline Structure
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| 1     | Data loading, metadata inspection, montage setup, PSD quality checks | Implemented |
-| 2     | Preprocessing: filtering, downsampling, re-referencing, ICA artifact removal, bad channel interpolation | Implemented |
-| 3     | Epoching and epoch-level quality control | Planned |
-| 4     | RIFT coherence analysis (main spectral analysis at 60 Hz) | Planned |
-| 5     | Statistical testing | Planned |
-| 6     | Documentation and export | Planned |
+| Phase   |                                                     Description                                         |    Status   |
+|-------  |---------------------------------------------------------------------------------------------------------|-------------|
+|   1     | Data loading, metadata inspection, montage setup, PSD quality checks                                    | Implemented |
+|   2     | Preprocessing: filtering, downsampling, re-referencing, ICA artifact removal, bad channel interpolation | Implemented |
+|   3     | Epoching and epoch-level quality control                                                                |   Planned   |
+|   4     | RIFT coherence analysis (main spectral analysis at 60 Hz)                                               |   Planned   |
+|   5     | Statistical testing                                                                                     |   Planned   |
+|   6     | Documentation and export                                                                                |   Planned   |
 
 ### Key Design Choices
 - **Low-pass at 100 Hz** (not standard 40 Hz) to preserve the 60 Hz tagging signal
