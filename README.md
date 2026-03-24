@@ -33,7 +33,7 @@ Detects and quantifies EEG phase-locking to a 60 Hz visual flicker stimulus (Rap
 
 ### Key Design Choices
 - **Low-pass at 100 Hz** (not the standard 40 Hz) to preserve the 60 Hz tagging signal
-- **No notch at 60 Hz** — Netherlands mains frequency is 50 Hz, cleanly separated from the signal
+- **NO notch at 60 Hz** — Netherlands mains frequency is 50 Hz, cleanly separated from the signal
 - **Linked mastoid reference** (EXG5/EXG6)
 - **ICA** fitted on a 1 Hz high-pass copy for better convergence, applied to the 0.1 Hz filtered data
 - **Downsampling** from 1024 Hz → 512 Hz (Nyquist well above 60 Hz)
