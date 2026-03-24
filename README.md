@@ -43,8 +43,6 @@ Detects and quantifies EEG phase-locking to a 60 Hz visual flicker stimulus (Rap
 data/
   sub1/  sub2/  sub3/  sub4/
     *.bdf              # Raw EEG (BioSemi, 1024 Hz, 73 channels)
-    output_s*.mat      # Behavioral data
-    awareness_s*.mat   # Awareness reports
 ```
 
 ### Key Dependencies
