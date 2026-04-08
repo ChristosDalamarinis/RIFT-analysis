@@ -22,6 +22,10 @@
 # MATLAB outputs
 *.mat
 *.fig
+*.m
+
+# OpenSesame / SPM outputs
+*.osexp
 
 # Behavioral data (if large and not essential for code testing)
 *.csv
